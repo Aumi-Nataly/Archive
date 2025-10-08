@@ -1,4 +1,6 @@
+using Archive.Application.Services;
 using Archive.Infrastructure.Data;
+using Archive.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ builder.Services.AddDbContext<ArchiveDbContext>(options =>
         builder.Configuration.GetConnectionString("ArchiveDB")));
 
 
-
+builder.Services.AddScoped<IArchiveRepository, ArchiveRepository>();
+builder.Services.AddScoped<IArchiveService, ArchiveService>();
 
 
 builder.Services.AddControllers();
