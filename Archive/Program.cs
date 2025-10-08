@@ -1,3 +1,4 @@
+using Archive.Application.Features.Save;
 using Archive.Application.Services;
 using Archive.Infrastructure.Data;
 using Archive.Infrastructure.Repository;
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<ArchiveDbContext>(options =>
 
 builder.Services.AddScoped<IArchiveRepository, ArchiveRepository>();
 builder.Services.AddScoped<IArchiveService, ArchiveService>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SaveHandler).Assembly));
+
 
 
 builder.Services.AddControllers();
