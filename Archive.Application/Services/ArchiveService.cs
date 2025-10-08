@@ -26,7 +26,7 @@ namespace Archive.Application.Services
             return entity;
         }
 
-        public async Task<List<ArchivedRecordDto>> GetRecordsAsync()
+        public async Task<List<ArchivedRecordDto>> GetRecordsAsync(int start, int take)
         {
             var records = await _repository.GetAllAsync();
 
@@ -34,7 +34,7 @@ namespace Archive.Application.Services
             {
                 var dto = ArchivedRecordMapper.ToDto(r);  
                 return dto;
-            }).ToList();
+            }).OrderBy(x=>x.Id).Take(take).Skip(start).ToList();
   
         }
 

@@ -11,7 +11,7 @@ namespace Archive.Application.Services
     public interface IArchiveService
     {
         Task<ArchivedRecord> SaveRecordAsync(ArchivedRecordDto recordDto);
-        Task<List<ArchivedRecordDto>> GetRecordsAsync();
+        Task<List<ArchivedRecordDto>> GetRecordsAsync(int start, int take);
 
         Task<ArchivedRecordDto> GetRecordAsync(int id);
 
