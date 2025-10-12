@@ -1,6 +1,7 @@
 using Archive.Application.Features.Report;
 using Archive.Application.Features.Save;
 using Archive.Application.Services;
+using Archive.Extensions;
 using Archive.Infrastructure.Data;
 using Archive.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ builder.Services.AddScoped<IArchiveRepository, ArchiveRepository>();
 builder.Services.AddScoped<IArchiveService, ArchiveService>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SaveHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetArchiveHandler).Assembly));
-
+builder.Services.AddMassTransitRabbitMq(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

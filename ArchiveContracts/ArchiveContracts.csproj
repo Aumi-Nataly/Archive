@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <AssemblyName>Archive.Lib</AssemblyName>
+	  <RootNamespace>Archive.Lib</RootNamespace>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <BaseVersion>1.0.0</BaseVersion>
+  </PropertyGroup>
+
+</Project>
