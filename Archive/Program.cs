@@ -2,8 +2,8 @@ using Archive.Application.Features.Report;
 using Archive.Application.Features.Save;
 using Archive.Application.Services;
 using Archive.Extensions;
-using Archive.Infrastructure.Data;
-using Archive.Infrastructure.Repository;
+using Archive.DataBase.Data;
+using Archive.DataBase.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

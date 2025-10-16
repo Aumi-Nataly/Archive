@@ -8,9 +8,19 @@ using System.Threading.Tasks;
 
 namespace Archive.Application.Features.Report
 {
+    /// <summary>
+    /// Модель для получения списка архива
+    /// </summary>
     public class GetArchiveQuery : IRequest<List<ArchivedRecordDto>>
     {
+        /// <summary>
+        /// С какой позиции начать
+        /// </summary>
         public int Start { get; set; }
+
+        /// <summary>
+        /// Сколько позиций взять
+        /// </summary>
         public int Take { get; set; }
     }
 }

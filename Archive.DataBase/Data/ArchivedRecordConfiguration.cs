@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Archive.Infrastructure.Data
+namespace Archive.DataBase.Data
 {
     public class ArchivedRecordConfiguration : IEntityTypeConfiguration<ArchivedRecord>
     {

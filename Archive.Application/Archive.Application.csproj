@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Archive.Infrastructure\Archive.Infrastructure.csproj" />
+  <ProjectReference Include="..\Archive.DataBase\Archive.DataBase.csproj" />
   </ItemGroup>
 
 </Project>

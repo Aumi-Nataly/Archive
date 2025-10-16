@@ -1,5 +1,5 @@
 ﻿using Archive.Domain.Models;
-using Archive.Infrastructure.Data;
+using Archive.DataBase.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Archive.Infrastructure.Repository
+namespace Archive.DataBase.Repository
 {
     public class ArchiveRepository: IArchiveRepository
     {

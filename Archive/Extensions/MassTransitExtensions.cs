@@ -4,6 +4,9 @@ using MassTransit;
 
 namespace Archive.Extensions
 {
+    /// <summary>
+    /// Настройки и конфигурации MassTransit с использованием RabbitMQ
+    /// </summary>
     public static class MassTransitExtensions
     {
         public static IServiceCollection AddMassTransitRabbitMq(this IServiceCollection services,
@@ -23,11 +26,17 @@ namespace Archive.Extensions
                         h.Password(rabbitMqSettings.Password);
                     });
 
+                    cfg.UseJsonSerializer();
                     cfg.UseMessageRetry(r => r.Interval(3, 1000));
+
+                    // Регистрация endpoint
+                    cfg.ConfigureEndpoints(context);
                 });
             });
 
-            
+
+            services.AddTransient<IPublishEndpoint>(provider => provider.GetRequiredService<IBus>());
+
             return services;
         }
     }

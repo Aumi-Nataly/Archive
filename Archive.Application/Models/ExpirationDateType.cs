@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Archive.Application.Models
 {
+    /// <summary>
+    /// Статусы строка хранения
+    /// </summary>
     public enum ExpirationDateType
     {
         None = 0,

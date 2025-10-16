@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Archive.Infrastructure.Repository
+namespace Archive.DataBase.Repository
 {
     public interface IArchiveRepository
     {

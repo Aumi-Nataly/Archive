@@ -1,6 +1,10 @@
-﻿using Archive.Application.Models;
+﻿using Archive.Application.Features.Report;
+using Archive.Application.Models;
 using Archive.Application.Services;
+using Archive.Domain.Events;
+using MassTransit;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +12,29 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Archive.Application.Features.Save
-{
+{    
+     /// <summary>
+     /// Сохранение данных в архив. 
+     /// Оповещение подписчиков об успешном сохранении.
+     /// Реализация паттерна Command/Query Handler.
+     /// </summary>
     public class SaveHandler : IRequestHandler<SaveRequest, bool>
     {
         private readonly IArchiveService _archiveService;
+        private readonly ILogger<SaveHandler> _logger;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public SaveHandler(IArchiveService archiveService)
+        public SaveHandler(IArchiveService archiveService, ILogger<SaveHandler> logger, IPublishEndpoint publishEndpoint)
         {
             _archiveService = archiveService;
+            _logger = logger;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<bool> Handle(SaveRequest request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Начата обработка команды сохранения");
+
             // Валидация входных данных
             if (string.IsNullOrEmpty(request.ActivityKey))
                 throw new ArgumentException("ActivityKey cannot be empty");
@@ -33,10 +48,28 @@ namespace Archive.Application.Features.Save
                 ArchivedDate = DateTime.UtcNow
             };
 
-            // Сохранение записи
-            var savedRecord = await _archiveService.SaveRecordAsync(recordDto);
+            try
+            {
+                // Сохранение записи
+                var savedRecord = await _archiveService.SaveRecordAsync(recordDto);
 
-            return savedRecord.Id !=0;
+                // Публикация события
+                await _publishEndpoint.Publish(
+                    new ArchivedEvent
+                    {
+                        ArchiveId = savedRecord.Id,
+                        ActivityKey = savedRecord.ActivityKey
+                    },
+                    cancellationToken);
+
+                _logger.LogInformation("Данные успешно сохранены в архив. ID: {Id}", savedRecord.Id);
+                return savedRecord.Id != 0;
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, "Ошибка при сохранении данных");
+                throw;
+            }
         }
     }
 
