@@ -22,13 +22,11 @@ namespace Archive.Application.Features.Save
     {
         private readonly IArchiveService _archiveService;
         private readonly ILogger<SaveHandler> _logger;
-        private readonly IPublishEndpoint _publishEndpoint;
 
-        public SaveHandler(IArchiveService archiveService, ILogger<SaveHandler> logger, IPublishEndpoint publishEndpoint)
+        public SaveHandler(IArchiveService archiveService, ILogger<SaveHandler> logger)
         {
             _archiveService = archiveService;
             _logger = logger;
-            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<bool> Handle(SaveRequest request, CancellationToken cancellationToken)
@@ -52,15 +50,6 @@ namespace Archive.Application.Features.Save
             {
                 // Сохранение записи
                 var savedRecord = await _archiveService.SaveRecordAsync(recordDto);
-
-                // Публикация события
-                await _publishEndpoint.Publish(
-                    new ArchivedEvent
-                    {
-                        ArchiveId = savedRecord.Id,
-                        ActivityKey = savedRecord.ActivityKey
-                    },
-                    cancellationToken);
 
                 _logger.LogInformation("Данные успешно сохранены в архив. ID: {Id}", savedRecord.Id);
                 return savedRecord.Id != 0;
