@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Archive.Application.Features.Save
         /// <summary>
         /// Ключ записи
         /// </summary>
+         [Required]
         public string ActivityKey { get; set; }
 
         /// <summary>

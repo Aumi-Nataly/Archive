@@ -20,7 +20,10 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SaveH
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetArchiveHandler).Assembly));
 builder.Services.AddMassTransitRabbitMq(builder.Configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressModelStateInvalidFilter = false; // ¬ключить валидацию
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
